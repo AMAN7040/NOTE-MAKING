@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Notes App</title>
+  </head>
+  <body> 
+    <%- include('./partials/nav') %>
+    <form class="d-flex" role="search">
+      <input class="form-control me-2 mt-4 mx-2" id='find' type="search" placeholder="Search Note" aria-label="Search">
+    </form>
+    
+     <div class="container my-3">
+      <hr>
+      <h1>Your Notes</h1>
+      <hr>
+      <div class="allNotes row container-fluid"></div>
+     </div>
+    <script src="script.js"></script>
+    <%- include('./partials/script') %>  
+  </body>
+</html>

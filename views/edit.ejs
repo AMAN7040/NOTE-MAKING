@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <title>Edit Note</title>
+    
+</head>
+<body>
+    <div class="container my-3">
+        <h1>Edit Note</h1>
+        <form id="editNoteForm">
+            <input type="hidden" id="editNoteId" value="<%= note._id %>"> <!-- Hidden input for note ID -->
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input type="text" id="title" name="title" value="<%= note.title %>"" class="form-control"  aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="content" class="form-label">Content</label>
+              <textarea id="content" class="form-control" name="content"><%= note.content %></textarea> <!-- Textarea for content -->
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const editNoteForm = document.getElementById('editNoteForm');
+            if (editNoteForm) {
+                console.log('Edit note form:', editNoteForm);
+                editNoteForm.addEventListener('submit', handleUpdateForm);
+            } else {
+                console.error('Edit note form not found');
+            }
+            
+        });
+        //function to handke form submission for updating a note
+     async function handleUpdateForm(event) {
+     event.preventDefault();
+
+     const title = document.getElementById('title').value;
+     const content = document.getElementById('content').value;
+     const noteId = document.getElementById('editNoteId').value;
+
+     try {
+        const response = await fetch(`/note/${noteId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title, content }),
+        });
+        if (!response.ok) {
+            throw new Error('Failed to update note');
+        }
+        console.log('Note updated successfully');
+        // You can perform further actions here, like showing a success message or redirecting
+        window.location.href = `/`
+       }catch (err) {
+          console.error('Error updating the note:', err);
+        }
+     }
+    </script>
+    <%- include('./partials/script') %>  </body>
+</html>

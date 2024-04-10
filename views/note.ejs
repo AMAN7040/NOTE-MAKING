@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./partials/head') %>
+    <title>Note</title>
+</head>
+<body>
+    <%- include('./partials/nav') %> 
+    <div class="container">
+        <h1><%= note.title %></h1>
+        <p><%= note.content %></p>
+    </div>
+    <%- include('./partials/script') %>  
+</body>
+</html>

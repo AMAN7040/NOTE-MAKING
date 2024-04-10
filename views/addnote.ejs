@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Add Note</title>
+    
+  </head>
+  <body> 
+    <%- include('./partials/nav') %>
+    
+     <div class="container my-3">
+        <h1>Add Note</h1>
+      <div class="noteContainer">
+        <div class="card">
+          <div class="card-body">
+            <form id="noteForm">
+              <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" aria-describedby="emailHelp">
+                <div id="titledesc" class="form-text">Enter a catchy title for the NOTE</div>
+              </div>
+              <div class="mb-3">
+                <label for="content" class="form-label">Description</label>
+                <textarea type="text" class="form-control" id="content"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+             </form>
+          </div>
+        </div>
+      </div>
+     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM fully loaded');
+            document.querySelector('#noteForm').addEventListener('submit', handleNoteForm);
+        });
+        //function to handle form submission
+async function handleNoteForm(event){
+    event.preventDefault();    //prevent the default form submission behaviour
+
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('content').value;
+
+    try{
+        const response = await fetch(`/note`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({title, content}),
+        });
+        if(!response.ok){
+            throw new Error("Failer to create note");
+        }
+
+        window.location.href = `/`;
+        
+
+        //clear the  fields
+        document.getElementById('title').value = '';
+        document.getElementById('content').value = '';
+    }catch(err){
+        console.error('Error creating the note:',err);
+    }
+}
+
+    </script>
+    <%- include('./partials/script') %>  
+  </body>
+</html>
